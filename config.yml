@@ -1,0 +1,17 @@
+appname: "RackerTracker"
+layout: "main"
+charset: "UTF-8"
+serializer: JSON
+
+template: "template_toolkit"
+engines:
+  template_toolkit:
+    encoding:  'utf8'
+    start_tag: '[%'
+    end_tag:   '%]'
+
+plugins:
+  DBIC:
+    default:
+      schema_class: 'RackerTracker::Schema'
+      dsn: 'dbi:SQLite:dbname=/home/naveed/projects/RackerTracker/data/tracker.db'
