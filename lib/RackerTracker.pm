@@ -13,12 +13,14 @@ get '/' => sub {
 post '/ajax/track' => sub {
     my $data = from_json request->body;
     my $email = $data->{email};
-    if ( ! $email or $email !~ /^.+\@mailtrust\.com$/ ) {
+    if ( ! $email or $email !~ /^.+\@mailtrust\.com$/ or $email =~ /'|"/ ) {
         status 400;
         return { error => "Invalid email" };
     }
     $email = lc $email;
     my $user = schema->resultset('User')->find_or_create({ email => $email });
+    my $current_name = $user->email;
+    $current_name =~ s/\@mailtrust\.com$//;
 
     for my $epoch ( @{ $data->{exercise} } ) {
         $epoch = substr $epoch, 0, 10;
@@ -39,7 +41,11 @@ post '/ajax/track' => sub {
         push @users, { name => $name, score => $row->get_column('cnt') };
     }
     my $now = DateTime->now;
-    return { users => \@users, month => $now->month_name };
+    return {
+        users => \@users,
+        month => $now->month_name,
+        name  => $current_name,
+    };
 };
 
 true;

@@ -112,14 +112,14 @@ $('#submitButton').click(function() {
     data: JSON.stringify(post),
     success: function(data) {
       console.log(data);
-      draw_results(data['users']);
+      draw_results(data['users'], data['name']);
       $('#input, #results').slideToggle();
     }
   });
 });
 
 // results view
-function draw_results(players) {
+function draw_results(players, current_user) {
   //$('<h3>').html(header).css({marginTop:30}).appendTo('#results');
   $('#results_graph').html('');
   var max = 31;
@@ -128,17 +128,17 @@ function draw_results(players) {
   var maxWidth = $('#results').width()-nameWidth-18; //for badge padding
   for(i=0; i < players.length; i++){
     var player = players[i];
+    var name = player['name'];
     score = player['score'];
-    $('<div class="badge">').addClass(i==3?'badge-success':'').html(
-      player['name'] +
-      //(i==3 ? 'rack.s.burger' : Math.random().toString(36).slice(Math.random()*10+2)) +
-      ' <span style="float:right;">'+score+'</span>'
+    $('<div class="badge">').html(
+      name + ' <span style="float:right;">'+score+'</span>'
     ).css({
       width: nameWidth + score / max * maxWidth,
       textAlign: 'left',
       margin: '8px 0'
     }).appendTo('#results_graph');
   }
+  $("div.badge:contains('" + current_user + "')").addClass('badge-success');
 };
 
 $('#return').click(function(){  
