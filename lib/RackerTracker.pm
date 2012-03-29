@@ -10,7 +10,7 @@ get '/' => sub {
 };
 
 #{'email' => '','exercise' => ['1332691921129']}
-post '/ajax/track' => sub {
+post '/ajax/workouts' => sub {
     my $data = from_json request->body;
     my $email = $data->{email};
     if ( ! $email or $email !~ /^.+\@mailtrust\.com$/ or $email =~ /'|"/ ) {
@@ -27,25 +27,23 @@ post '/ajax/track' => sub {
         my $date = DateTime->from_epoch(epoch => $epoch);
         $user->workouts->update_or_create({day => $date->ymd});
     }
-    my @rows = schema->resultset('Workout')->search({},
-        {
-            '+select' => [{ count => 'email' }],
-            '+as'     => ['cnt'],
-            group_by  => 'email',
-        }
-    );
-    my @users;
-    for my $row (@rows) {
-        my $name = $row->email->email;
-        $name =~ s/\@mailtrust\.com$//;
-        push @users, { name => $name, score => $row->get_column('cnt') };
-    }
-    my $now = DateTime->now;
-    return {
-        users => \@users,
-        month => $now->month_name,
-        name  => $current_name,
-    };
+    return _get_data($current_name);
 };
+
+get '/ajax/workouts' => sub { _get_data() };
+
+sub _get_data {
+    my ($current_name) = @_;
+    my @users = schema->resultset('Workout')->search({}, {
+        '+select' => [{ count => 'email' }],
+        '+as'     => ['cnt'],
+        group_by  => 'email',
+    });
+    @users = map {
+        email => $_->get_column('email'),
+        score => $_->get_column('cnt'),
+    }, @users;
+    return { users => \@users };
+}
 
 true;

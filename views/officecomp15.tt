@@ -33,6 +33,10 @@
     <div class="note">You're now logged in as long as you keep this cookie. Obviously, you're on the honor system here. Accidental resubmissions for the same calendar day will only be counted once. Be sure to set a daily recurring <a target="_blank" href="http://www.rackspace.com/apps/support/portal/1409">calendar reminder</a>. For advanced users only: try dragging across buttons to toggle with a swipe.</div>
   </fieldset>
 </div>
+      
+<div class="row">
+  <a href="javascript:show_results();" id="view_standingszz">View Standings</a>
+</div>
 <div class="row">
   <a href="javascript:$('#details').slideToggle();" >Competition details</a>
   <div id="details">
@@ -98,49 +102,70 @@ $('#submitButton').click(function() {
     if (!post[key]) post[key] = [];
     post[key].push(val);
   });
-  var email = $('#email').val();
-  if (!email || ! email.match(/^.+@mailtrust\.com$/)) {
+  var email = validate_email();
+  if (! email) {
     alert('Please provide a valid mailtrust.com email address');
     return false;
   }
   post['email'] = email;
-  console.log(post);
   //$('<pre>').html(JSON.stringify(post,null,'\t')).prependTo('#results');
   $.ajax({
     type: 'POST',
-    url: '[% request.uri_base %]/ajax/track',
+    url: '[% request.uri_base %]/ajax/workouts',
     data: JSON.stringify(post),
     success: function(data) {
-      console.log(data);
-      draw_results(data['users'], data['name']);
+      draw_results(data['users']);
       $('#input, #results').slideToggle();
     }
   });
 });
 
-// results view
-function draw_results(players, current_user) {
-  //$('<h3>').html(header).css({marginTop:30}).appendTo('#results');
+function validate_email() {
+  var email = $.trim($('#email').val());
+  if (!email || ! email.match(/^.+@mailtrust\.com$/)) {
+    return false;
+  }
+  return email;
+}
+
+function show_results() {
+  $.ajax({
+    type: 'GET',
+    url: '[% request.uri_base %]/ajax/workouts',
+    success: function(data) {
+      draw_results(data['users']);
+      $('#input, #results').slideToggle();
+    }
+  });
+}
+
+function draw_results(players) {
   $('#results_graph').html('');
   var max = 31;
-  var score = max; 
   var nameWidth = 140;
   var maxWidth = $('#results').width()-nameWidth-18; //for badge padding
   for(i=0; i < players.length; i++){
     var player = players[i];
-    var name = player['name'];
-    score = player['score'];
+    var email = player['email'];
+    var user = email.split('@')[0];
+    var score = player['score'];
     $('<div class="badge">').html(
-      name + ' <span style="float:right;">'+score+'</span>'
+      user + ' <span style="float:right;">'+score+'</span>'
     ).css({
       width: nameWidth + score / max * maxWidth,
       textAlign: 'left',
       margin: '8px 0'
     }).appendTo('#results_graph');
   }
-  $("div.badge:contains('" + current_user + "')").addClass('badge-success');
+
+  var current_email = validate_email();
+  if (current_email) {
+    var current_name = current_email.split('@')[0];
+    $("div.badge:contains('" + current_name + "')").addClass('badge-success');
+  }
 };
 
+$('#view_standings').click(function() { alert(22);show_results(); return false; });
 $('#return').click(function(){  
   $('#input, #results').slideToggle();
 });
