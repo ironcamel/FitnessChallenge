@@ -140,6 +140,7 @@ function show_results() {
 }
 
 function draw_results(players, month) {
+  $('#results_month').html(month);
   $('#results_graph').html('');
   var max = 31;
   var nameWidth = 140;
@@ -150,13 +151,12 @@ function draw_results(players, month) {
     var user = email.split('@')[0];
     var score = player['score'];
     $('<div class="badge">').html(
-      user + ' <span style="float:right;">'+score+'</span>'
+      user + ' <span style="float:right">'+score+'</span>'
     ).css({
       width: nameWidth + score / max * maxWidth,
-      textAlign: 'left',
-      margin: '8px 0'
+      'white-space': 'normal',
+      margin: '8px 0px'
     }).appendTo('#results_graph');
-    $('#results_month').html(month);
   }
 
   var current_email = validate_email();
@@ -166,7 +166,6 @@ function draw_results(players, month) {
   }
 };
 
-$('#view_standings').click(function() { alert(22);show_results(); return false; });
 $('#return').click(function(){  
   $('#input, #results').slideToggle();
 });
