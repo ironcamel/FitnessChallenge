@@ -46,7 +46,7 @@
 </form>
 
 <div id="results" class="container">
-  <h1>March 2012 Standings</h1>
+  <h1><span id="results_month"></span> 2012 Standings</h1>
   <div id="results_graph" class="container">
   </div>
   <button id="return" class='btn btn-info'>back</button>
@@ -114,7 +114,7 @@ $('#submitButton').click(function() {
     url: '[% request.uri_base %]/ajax/workouts',
     data: JSON.stringify(post),
     success: function(data) {
-      draw_results(data['users']);
+      draw_results(data.users, data.month);
       $('#input, #results').slideToggle();
     }
   });
@@ -133,13 +133,13 @@ function show_results() {
     type: 'GET',
     url: '[% request.uri_base %]/ajax/workouts',
     success: function(data) {
-      draw_results(data['users']);
+      draw_results(data.users, data.month);
       $('#input, #results').slideToggle();
     }
   });
 }
 
-function draw_results(players) {
+function draw_results(players, month) {
   $('#results_graph').html('');
   var max = 31;
   var nameWidth = 140;
@@ -156,6 +156,7 @@ function draw_results(players) {
       textAlign: 'left',
       margin: '8px 0'
     }).appendTo('#results_graph');
+    $('#results_month').html(month);
   }
 
   var current_email = validate_email();
