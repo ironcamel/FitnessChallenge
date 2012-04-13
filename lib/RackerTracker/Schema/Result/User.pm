@@ -74,12 +74,12 @@ __PACKAGE__->has_many(
   "workouts",
   "RackerTracker::Schema::Result::Workout",
   { "foreign.email" => "self.email" },
-  { cascade_copy => 0, cascade_delete => 0 },
+  { cascade_copy => 1, cascade_delete => 1 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07017 @ 2012-03-23 06:39:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:r4/KuGh6CBiGGJXNrWFwHA
+# Created by DBIx::Class::Schema::Loader v0.07017 @ 2012-04-13 20:44:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OBGNbPycX2TB3L5ZjGHLBw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
