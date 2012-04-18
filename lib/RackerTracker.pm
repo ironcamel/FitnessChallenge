@@ -3,6 +3,8 @@ use Dancer ':syntax';
 use Dancer::Plugin::DBIC 'schema';
 use DateTime;
 
+eval { schema->deploy };
+
 get '/' => sub { template 'officecomp15' };
 
 get '/ajax/workouts' => sub { _get_data() };
@@ -22,6 +24,22 @@ post '/ajax/workouts' => sub {
         $user->workouts->update_or_create({day => $date->ymd});
     }
     return _get_data($time);
+};
+
+post '/ajax/delete-user' => sub {
+    my $email = param('email');
+    debug "Admin is trying to delete user $email";
+    return { error => 'Invalid admin password' }
+        unless param('admin_password') eq setting('admin_password');
+    schema->resultset('User')->search({email => $email})->delete_all;
+    return {};
+};
+
+get '/admin' => sub {
+    my @users = sort { $a->email cmp $b->email } schema->resultset('User')->all;
+    template admin => {
+        users => \@users,
+    };
 };
 
 sub _get_data {
@@ -59,6 +77,7 @@ sub _get_data {
     };
 }
 
+# The time received from the js side needs to be shortened to 10 digits
 sub _date_from_time { DateTime->from_epoch(epoch => substr $_[0], 0, 10) }
 
 true;
