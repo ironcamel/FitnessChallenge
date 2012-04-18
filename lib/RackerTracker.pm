@@ -1,9 +1,11 @@
 package RackerTracker;
 use Dancer ':syntax';
 use Dancer::Plugin::DBIC 'schema';
+
+use Capture::Tiny 'capture';
 use DateTime;
 
-eval { schema->deploy };
+capture { eval { schema->deploy } };
 
 get '/' => sub { template 'officecomp15' };
 

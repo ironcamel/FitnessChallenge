@@ -12,6 +12,7 @@ WriteMakefile(
       : ()),
     PL_FILES            => {},
     PREREQ_PM => {
+        'Capture::Tiny'            => 0,
         'Dancer'                   => 1.3095,
         'Dancer::Plugin::DBIC'     => 0,
         'DateTime'                 => 0,
