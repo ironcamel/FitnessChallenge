@@ -1,0 +1,35 @@
+
+<label for="Admin Password:">Admin Password:</label>
+<input type="text" value="" id="admin-pass" />
+
+<table id="user-table">
+[% FOREACH user IN users %]
+  <tr class="user-row">
+    <td>[% user.email %]</td>
+    <td>
+      <button type="button" data-user="[% user.email %]">delete</button>
+    </td>
+  </tr>
+[% END %]
+</table>
+  
+<script type="text/javascript" charset="utf-8">
+
+$('button').click(function() {
+  var email = $(this).attr('data-user');
+  var parent_row = $(this).parents('.user-row');
+  $.ajax({
+    type: 'POST',
+    url: '[% request.uri_base %]/ajax/delete-user',
+    data: { email: email, admin_password: $('#admin-pass').val() },
+    success: function(data) {
+      if (data && data.error) {
+        alert(data.error);
+        return;
+      }
+      parent_row.remove();
+    }
+  });
+});
+
+</script>

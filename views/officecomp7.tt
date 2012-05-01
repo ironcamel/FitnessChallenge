@@ -1,0 +1,54 @@
+
+<form action="" method="post" accept-charset="utf-8">
+</form>
+<div id="comp1" class="comp">
+  <div class="row">
+    <h1>I <abbr title="20+ minutes of increased heartrate">exercised</abbr>&hellip;</h1>
+    <div class="btn-group" data-toggle="buttons-checkbox">
+      <button>today</button><button>yesterday</button><button>two days ago</button>
+    </div>
+  </div>
+  <div class="row">
+      <h1>I commuted <abbr title="foot, bike, bus, or car (HOV 2+ or 30+MPG)">cleanly</abbr>&hellip;</h1>
+    <div class="btn-group" data-toggle="buttons-checkbox">
+      <button>today</button><button>yesterday</button><button>two days ago</button>
+    </div>
+  </div>
+  <div class="row">
+    <h1>I put my workstation to <abbr title="for at least half a day">sleep</abbr>&hellip;</h1>
+    <div class="btn-group" data-toggle="buttons-checkbox">
+      <button>today</button><button>yesterday</button><button>two days ago</button>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn-inverse submit">Submit!</button>
+  </div>
+  <div class="row">
+    <a class="toggler" href="#">Why?</a>
+    <div class="togglerContent">With just a few simple daily activites, Racksburgers can put a little motion into our otherwise sendentary profession, save over $1300/mo in the landlord's power bill, eliminate 132 annual tons of greenhouse gas produced to run our screensavers, and improve the welfare of this Fanatically fantastic planet.
+    </div>
+  </div>
+</div>
+
+<script>
+$('[title]').tooltip();
+
+$('button').addClass('btn btn-large').prepend(
+  $('<i class="icon-ok icon-white">').css({marginRight:5}).hide()
+).click(function(){
+  $(this).toggleClass('btn-success');//.find('i').toggle();
+}).mousedown(function(){
+  $first = $(this);
+  $('button').mouseover(function(){
+    $(this).click();
+    $first.click(); $first = $();
+  });
+});
+$('body').mouseup(function(){
+  $('button').unbind('mouseover');
+});
+
+$('.toggler').click(function(){
+  $(this).siblings('.togglerContent').toggle();
+});
+</script>
