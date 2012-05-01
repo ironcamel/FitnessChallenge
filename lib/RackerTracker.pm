@@ -46,19 +46,12 @@ get '/admin' => sub {
 
 sub _get_data {
     my ($time) = @_;
-    my $dt_start = _date_from_time($time || time());
-    $dt_start->set_day(1)->truncate(to => 'day');
+    my $dt_start = _date_from_time($time || time())->set_day(1);
     my $dt_end = DateTime->last_day_of_month(
         year => $dt_start->year, month => $dt_start->month);
-    my $dtf = schema->storage->datetime_parser;
     my @users = schema->resultset('Workout')->search(
         {
-            day => {
-                -between => [
-                    $dtf->format_datetime($dt_start),
-                    $dtf->format_datetime($dt_end),
-                ],
-            }
+            day => { -between => [$dt_start->ymd, $dt_end->ymd] }
         },
         {
             '+select' => [{ count => 'email' }],
