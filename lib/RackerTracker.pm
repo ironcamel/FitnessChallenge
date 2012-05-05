@@ -15,7 +15,8 @@ post '/ajax/workouts' => sub {
     my $data = from_json request->body;
     my $email = $data->{email};
     my $time = $data->{time};
-    if ( ! $email or $email !~ /^.+\@mailtrust\.com$/ or $email =~ /'|"/ ) {
+    my $user_domain = setting 'user_domain';
+    if ( ! $email or $email !~ /\@$user_domain$/ or $email =~ /'|"/ ) {
         status 400;
         return { error => "Invalid email" };
     }

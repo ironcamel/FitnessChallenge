@@ -1,8 +1,11 @@
+# Rename me to config.yml
+
 appname: "Fitness Challenge"
 layout: "main"
 charset: "UTF-8"
 serializer: 'JSON'
 admin_password: 'change me!'
+user_domain: 'yourcompany.com'
 
 template: "template_toolkit"
 engines:

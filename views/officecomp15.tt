@@ -20,10 +20,10 @@
 </div>-->
 <div class="row">
   <fieldset id="login" class="btn btn-inverse">
-    <input id="email" type="text" placeholder="you@mailtrust.com">
+    <input id="email" type="text" placeholder="you@[% settings.user_domain %]">
     <!--
     <input type="password" placeholder="p4$$W0rD">
-    <button id="loginButton" class="btn-info">Login with Mailtrust SSO</button>
+    <button id="loginButton" class="btn-info">Login</button>
     -->
     <button id="submitButton" class="btn-info">Submit!</button>
     <div class="note">In just 20 minutes a day, Racksburgers can put a little motion into our otherwise sendentary profession.</div>
@@ -106,7 +106,7 @@ $('#submitButton').click(function() {
   });
   var email = validate_email();
   if (! email) {
-    alert('Please provide a valid mailtrust.com email address');
+    alert('Please provide a valid [% settings.user_domain %] email address');
     return false;
   }
   post.email = email;
@@ -125,7 +125,7 @@ $('#submitButton').click(function() {
 
 function validate_email() {
   var email = $.trim($('#email').val());
-  if (!email || ! email.match(/^.+@mailtrust\.com$/)) {
+  if (!email || ! email.match(/^.+@[% settings.user_domain %]$/)) {
     return false;
   }
   return email;

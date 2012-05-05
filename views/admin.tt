@@ -1,6 +1,10 @@
 
+<p>
+<a href="[% request.uri_base %]/">Home</a>
+</p>
+
 <label for="Admin Password:">Admin Password:</label>
-<input type="text" value="" id="admin-pass" />
+<input type="password" value="" id="admin-pass" />
 
 <table id="user-table">
 [% FOREACH user IN users %]
