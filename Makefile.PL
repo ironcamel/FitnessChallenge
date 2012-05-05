@@ -1,16 +1,13 @@
-use strict;
-use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME                => 'RackerTracker',
-    AUTHOR              => q{YOUR NAME <youremail@example.com>},
-    VERSION_FROM        => 'lib/RackerTracker.pm',
-    ABSTRACT            => 'YOUR APPLICATION ABSTRACT',
-    ($ExtUtils::MakeMaker::VERSION >= 6.3002
-      ? ('LICENSE'=> 'perl')
-      : ()),
-    PL_FILES            => {},
+    NAME                => 'FitnessChallenge',
+    AUTHOR              => [
+        'Dave Williams <dave.williams@rackspace.com>',
+        'Naveed Massjouni <naveedm9@gmail.com>',
+    ],
+    VERSION_FROM        => 'lib/FitnessChallenge',
+    LICENSE             => 'perl',
     PREREQ_PM => {
         'Capture::Tiny'            => 0,
         'Dancer'                   => 1.3095,
@@ -19,9 +16,8 @@ WriteMakefile(
         'DateTime::Format::SQLite' => 0,
         'JSON'                     => 0,
         'SQL::Translator'          => 0.11006,
+        'Template'                 => 0,
         'Test::More'               => 0,
         'YAML'                     => 0,
     },
-    dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'RackerTracker-*' },
 );
