@@ -1,12 +1,12 @@
 use utf8;
-package RackerTracker::Schema::Result::User;
+package FitnessChallenge::Schema::Result::User;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-RackerTracker::Schema::Result::User
+FitnessChallenge::Schema::Result::User
 
 =cut
 
@@ -66,20 +66,20 @@ __PACKAGE__->set_primary_key("email");
 
 Type: has_many
 
-Related object: L<RackerTracker::Schema::Result::Workout>
+Related object: L<FitnessChallenge::Schema::Result::Workout>
 
 =cut
 
 __PACKAGE__->has_many(
   "workouts",
-  "RackerTracker::Schema::Result::Workout",
+  "FitnessChallenge::Schema::Result::Workout",
   { "foreign.email" => "self.email" },
   { cascade_copy => 1, cascade_delete => 1 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07017 @ 2012-04-13 20:44:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OBGNbPycX2TB3L5ZjGHLBw
+# Created by DBIx::Class::Schema::Loader v0.07017 @ 2012-05-05 21:54:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:75YWGPzkuiO7ZHm5Umjk+Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

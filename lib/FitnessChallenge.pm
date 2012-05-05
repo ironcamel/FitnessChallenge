@@ -1,4 +1,4 @@
-package RackerTracker;
+package FitnessChallenge;
 use Dancer ':syntax';
 use Dancer::Plugin::DBIC 'schema';
 

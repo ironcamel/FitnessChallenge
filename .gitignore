@@ -1,3 +1,4 @@
 config.yml
+logs
 environments/development.yml
 environments/production.yml
