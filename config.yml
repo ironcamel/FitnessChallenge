@@ -1,8 +1,8 @@
-appname: "RackerTracker"
+appname: "Fitness Challenge"
 layout: "main"
 charset: "UTF-8"
 serializer: 'JSON'
-admin_password: '755'
+admin_password: 'change me!'
 
 template: "template_toolkit"
 engines:

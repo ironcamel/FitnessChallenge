@@ -1,4 +1,6 @@
 # configuration file for development environment
+# Rename this file to development.yml
+# Make sure to update the dsn
 
 # the logger engine to use
 # console: log messages to STDOUT (your console where you started the
@@ -19,4 +21,4 @@ plugins:
   DBIC:
     default:
       schema_class: 'RackerTracker::Schema'
-      dsn: 'dbi:SQLite:dbname=/home/naveed/projects/RackerTracker/data/tracker-dev.db'
+      dsn: 'dbi:SQLite:dbname=/home/bob/projects/RackerTracker/data/tracker-dev.db'
