@@ -20,5 +20,5 @@ show_errors: 1
 plugins:
   DBIC:
     default:
-      schema_class: 'RackerTracker::Schema'
+      schema_class: 'FitnessChallenge::Schema'
       dsn: 'dbi:SQLite:dbname=/home/bob/projects/RackerTracker/data/tracker-dev.db'

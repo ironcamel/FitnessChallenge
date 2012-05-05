@@ -20,5 +20,5 @@ route_cache: 1
 plugins:
   DBIC:
     default:
-      schema_class: 'RackerTracker::Schema'
+      schema_class: 'FitnessChallenge::Schema'
       dsn: 'dbi:SQLite:dbname=/var/fitness-challenge/fitness.db'
